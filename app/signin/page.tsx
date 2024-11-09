@@ -14,17 +14,29 @@ export default function SignIn() {
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    
     // Test credentials for now
-    const testEmail = 'test@example.com';
-    const testPassword = 'password123';
+    const credentials = {
+      student: {
+        email: 'student@example.com',
+        password: 'password123'
+      },
+      faculty: {
+        email: 'faculty@example.com',
+        password: 'faculty123'
+      }
+    }
 
-    if (email === testEmail && password === testPassword) {
-      console.log('Sign in successful');
-      router.push('/dashboard');
+    // Check if credentials match faculty or student
+    if (email === credentials.faculty.email && password === credentials.faculty.password) {
+      console.log('Faculty sign in successful')
+      router.push('/faculty')
+    } else if (email === credentials.student.email && password === credentials.student.password) {
+      console.log('Student sign in successful')
+      router.push('/dashboard')
     } else {
-      console.log('Invalid credentials');
-      // You might want to add some error handling here
-      // For example, setting an error state and displaying a message to the user
+      console.log('Invalid credentials')
+      // Add error handling here
     }
   }
 
@@ -60,9 +72,9 @@ export default function SignIn() {
                   required
                 />
               </div>
-            </div>
-            <div className="mt-4">
-              <Button type="submit" className="w-full" onClick={() => handleSignIn}>Sign In</Button>
+              <div className="mt-4">
+                <Button type="submit" className="w-full">Sign In</Button>
+              </div>
             </div>
           </form>
         </CardContent>
