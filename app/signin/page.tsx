@@ -24,16 +24,23 @@ export default function SignIn() {
       faculty: {
         email: 'faculty@example.com',
         password: 'faculty123'
+      },
+      admin: {
+        email: 'admin@example.com',
+        password: 'admin123'
       }
     }
 
-    // Check if credentials match faculty or student
+    // Check if credentials match faculty, student, or admin
     if (email === credentials.faculty.email && password === credentials.faculty.password) {
       console.log('Faculty sign in successful')
       router.push('/faculty')
     } else if (email === credentials.student.email && password === credentials.student.password) {
       console.log('Student sign in successful')
       router.push('/dashboard')
+    } else if (email === credentials.admin.email && password === credentials.admin.password) {
+      console.log('Admin sign in successful')
+      router.push('/admin')
     } else {
       console.log('Invalid credentials')
       // Add error handling here

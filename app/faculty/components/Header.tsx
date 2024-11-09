@@ -15,7 +15,7 @@ export default function Header() {
     setIsLoading(true)
     setTimeout(() => {
       localStorage.removeItem("user")
-      router.push("/login")
+      router.push("/signin")
     }, 1000)
   }
 
