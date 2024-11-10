@@ -1,12 +1,16 @@
-"use client"
+'use client'
 
 import { useRouter } from "next/navigation"
 import { Bell, Calendar, FileText, Home, LogOut, User, Microscope, GraduationCap, UserCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState } from "react"
+import { SubmitAssignmentDialog } from "./SubmitAssignmentDialog"
 
 export default function Header() {
   const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleLogout = () => {
     // Implement logout logic here
@@ -16,6 +20,10 @@ export default function Header() {
 
   const handleStudentDetailsClick = () => {
     router.push("/dashboard/student-details")
+  }
+
+  const handleSubmitAssignmentClick = () => {
+    setIsDialogOpen(true);
   }
 
   return (
@@ -41,9 +49,13 @@ export default function Header() {
                   </Button>
                 </li>
                 <li>
-                  <Button variant="ghost" className="text-gray-800 hover:text-primary hover:bg-gray-300">
+                  <Button 
+                    variant="ghost" 
+                    className="text-gray-800 hover:text-primary hover:bg-gray-300"
+                    onClick={handleSubmitAssignmentClick}
+                  >
                     <FileText className="mr-2 h-4 w-4" />
-                    Assignments
+                    Submit Assignment
                   </Button>
                 </li>
                 <li>
@@ -80,6 +92,10 @@ export default function Header() {
             </DropdownMenu>
           </div>
         </div>
+        <SubmitAssignmentDialog 
+          open={isDialogOpen}
+          setOpen={setIsDialogOpen}
+        />
     </header>
   )
 }

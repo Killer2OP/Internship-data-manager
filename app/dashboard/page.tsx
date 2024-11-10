@@ -3,6 +3,7 @@ import NoticeBoard from './components/NoticeBoard'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AssignmentsTab from './components/AssignmentsTab'
 import FNRTab from './components/FNRTab'
+// import { SubmitAssignmentDialog } from './components/SubmitAssignmentDialog';
 
 export default function Dashboard() {
   return (
@@ -25,6 +26,9 @@ export default function Dashboard() {
           </Tabs>
         </main>
       </div>
+      {/* <SubmitAssignmentDialog open={false} setOpen={function (open: boolean): void {
+        throw new Error('Function not implemented.')
+      } } /> */}
     </div>
   )
 }
