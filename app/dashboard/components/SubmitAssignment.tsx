@@ -12,7 +12,7 @@ export default function SubmitAssignment() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title, description, dueDate, facultyId: "facultyIdHere" }), // Replace with actual faculty ID
+      body: JSON.stringify({ title, description, dueDate }), // Replace with actual faculty ID
     });
 
     if (response.ok) {

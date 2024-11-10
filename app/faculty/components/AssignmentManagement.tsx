@@ -38,7 +38,6 @@ export default function AssignmentManagement() {
     setLoading(true);
 
     try {
-      // 1. Create the assignment
       const assignmentResponse = await fetch('/api/assignments', {
         method: 'POST',
         headers: {
@@ -47,16 +46,16 @@ export default function AssignmentManagement() {
         body: JSON.stringify({
           title: formData.title,
           description: formData.description,
-          dueDate: formData.dueDate,
-          facultyId: "your-faculty-id", // Replace with actual faculty ID from auth
+          dueDate: new Date(formData.dueDate).toISOString(),
         }),
       });
 
+      const assignmentData = await assignmentResponse.json();
+      
       if (!assignmentResponse.ok) {
-        throw new Error('Failed to create assignment');
+        throw new Error(assignmentData.error || 'Failed to create assignment');
       }
 
-      // 2. Send email notifications
       const notificationResponse = await fetch('/api/notifications/email', {
         method: 'POST',
         headers: {
@@ -65,17 +64,17 @@ export default function AssignmentManagement() {
         body: JSON.stringify({
           assignmentTitle: formData.title,
           dueDate: formData.dueDate,
+          studentEmails: ['rohitgang69@gmail.com'],
         }),
       });
 
+      const notificationData = await notificationResponse.json();
+      
       if (!notificationResponse.ok) {
-        throw new Error('Failed to send notifications');
+        throw new Error(notificationData.error || 'Failed to send notifications');
       }
 
-      // Success
-      toast.success('Assignment created and notifications sent!');
-      
-      // Reset form
+      toast.success('Assignment created successfully');
       setFormData({
         title: '',
         description: '',
@@ -83,8 +82,9 @@ export default function AssignmentManagement() {
       });
 
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('Failed to create assignment');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create assignment';
+      // console.error('Assignment creation failed:', errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

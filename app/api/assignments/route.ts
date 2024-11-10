@@ -7,11 +7,26 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
     
-    const assignment = await Assignment.create(body);
+    // Create assignment document
+    const assignmentData = {
+      title: body.title,
+      description: body.description,
+      dueDate: new Date(body.dueDate)
+    };
+    
+    console.log('Creating assignment with data:', assignmentData);
+    
+    const assignment = await Assignment.create(assignmentData);
+    console.log('Assignment created:', assignment);
     
     return NextResponse.json(assignment, { status: 201 });
-  } catch (error) {
-    console.error('Assignment creation error:', error);
+  } catch (error: any) {
+    console.error('Creation error:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
+    
     return NextResponse.json(
       { error: 'Failed to create assignment' },
       { status: 500 }

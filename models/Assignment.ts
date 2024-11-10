@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+// Clear any existing model
+if (mongoose.models.Assignment) {
+  delete mongoose.models.Assignment;
+}
+
 const AssignmentSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -13,14 +18,13 @@ const AssignmentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  facultyId: {
-    type: String,
-    required: true,
-  },
   createdAt: {
     type: Date,
     default: Date.now,
-  },
+  }
+}, {
+  collection: 'assignments_v2', // Use a completely new collection
+  strict: true
 });
 
-export default mongoose.models.Assignment || mongoose.model('Assignment', AssignmentSchema); 
+export default mongoose.model('Assignment', AssignmentSchema); 
