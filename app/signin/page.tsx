@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label"
 export default function SignIn() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
   const router = useRouter()
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +38,7 @@ export default function SignIn() {
       router.push('/dashboard')
     } else {
       console.log('Invalid credentials')
-      // Add error handling here
+      setError('Invalid email or password. Please try again.')
     }
   }
 
@@ -65,13 +67,28 @@ export default function SignIn() {
                 <Label htmlFor="password">Password</Label>
                 <Input 
                   id="password" 
-                  type="password" 
+                  type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <div className="flex items-center space-x-2 mt-1">
+                  <input
+                    id="showPassword"
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={() => setShowPassword(!showPassword)}
+                  />
+                  <Label htmlFor="showPassword" className="text-sm">Show Password</Label>
+                </div>
               </div>
+
+              {/* Display error message if any */}
+              {error && (
+                <p className="text-red-500 text-sm">{error}</p>
+              )}
+
               <div className="mt-4">
                 <Button type="submit" className="w-full">Sign In</Button>
               </div>
