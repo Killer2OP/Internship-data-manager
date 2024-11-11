@@ -26,6 +26,10 @@ export default function Header() {
     setIsDialogOpen(true);
   }
 
+  const handleDashboardClick = () => {
+    router.push("/dashboard")
+  }
+
   return (
     <header className="bg-gray-200 text-gray-800 p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -37,7 +41,11 @@ export default function Header() {
             <nav>
               <ul className="flex space-x-4">
                 <li>
-                  <Button variant="ghost" className="text-gray-800 hover:text-primary hover:bg-gray-300">
+                  <Button 
+                    variant="ghost" 
+                    className="text-gray-800 hover:text-primary hover:bg-gray-300"
+                    onClick={handleDashboardClick}
+                  >
                     <Home className="mr-2 h-4 w-4" />
                     Dashboard
                   </Button>

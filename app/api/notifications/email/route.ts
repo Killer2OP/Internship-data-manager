@@ -7,7 +7,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const TEMP_STUDENT_EMAILS = [
-  'rohitgang69@gmail.com',
+  'lightyagamikira403@gmail.com',
   // Add more test emails as needed
 ];
 
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
             from: 'onboarding@resend.dev', // or your verified domain
             to: email,
             subject: `New Assignment: ${assignmentTitle}`,
-            html: `
+            html: ` 
               <h1>New Assignment Posted</h1>
               <p>A new assignment has been posted:</p>
               <p><strong>Title:</strong> ${assignmentTitle}</p>

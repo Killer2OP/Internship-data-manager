@@ -7,9 +7,9 @@ import FNRTab from './components/FNRTab'
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Header />
-      <div className="flex-1 overflow-hidden">
+      <div className="container mx-auto py-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 76px)' }}>
         <main className="container mx-auto p-4">
           <NoticeBoard />
           <Tabs defaultValue="assignments">
