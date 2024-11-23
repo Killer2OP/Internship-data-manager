@@ -13,7 +13,17 @@ import type { Teacher, Student, Performance } from '@/lib/types/index'
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { LogOut } from 'lucide-react' // Import your logout icon
+import { LogOut, Download } from 'lucide-react' // Import your logout icon
+import { StudentReports } from './student-reports'
+
+interface StudentReport {
+  studentId: number;
+  studentName: string;
+  totalAssignments: number;
+  completedAssignments: number;
+  fnrSubmissions: number;
+  completionRate: number;
+}
 
 export default function InternshipDashboard() {
   const router = useRouter();
@@ -23,6 +33,21 @@ export default function InternshipDashboard() {
   const [assignments, setAssignments] = useState<{[key: number]: number}>({})
   const [newTeacherName, setNewTeacherName] = useState('')
   const [newStudentName, setNewStudentName] = useState('')
+  const [reports, setReports] = useState<StudentReport[]>(
+    students.map(student => {
+      const studentPerf = performance.find(p => p.studentId === student.id)
+      return {
+        studentId: student.id,
+        studentName: student.name,
+        totalAssignments: studentPerf?.totalAssignments || 0,
+        completedAssignments: studentPerf?.completedAssignments || 0,
+        fnrSubmissions: 0, // You'll need to track this in your performance data
+        completionRate: studentPerf 
+          ? (studentPerf.completedAssignments / studentPerf.totalAssignments) * 100 
+          : 0
+      }
+    })
+  )
 
   const assignTeacher = (studentId: number, teacherId: number) => {
     setAssignments(prev => ({ ...prev, [studentId]: teacherId }))
@@ -45,6 +70,28 @@ export default function InternshipDashboard() {
   const handleLogout = () => {
     localStorage.removeItem("user")
     router.push("/signin")
+  }
+
+  const downloadReports = () => {
+    const csvContent = [
+      // CSV Headers
+      ['Student ID', 'Student Name', 'Total Assignments', 'Completed Assignments', 'FNR Submissions', 'Completion Rate (%)'].join(','),
+      // CSV Data
+      ...reports.map(report => [
+        report.studentId,
+        report.studentName,
+        report.totalAssignments,
+        report.completedAssignments,
+        report.fnrSubmissions,
+        report.completionRate.toFixed(2)
+      ].join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'student_reports.csv';
+    link.click();
   }
 
   return (
@@ -99,6 +146,7 @@ export default function InternshipDashboard() {
           <TabsTrigger value="home">Home</TabsTrigger>
           <TabsTrigger value="performance">Student Performance</TabsTrigger>
           <TabsTrigger value="assignments">Teacher Assignments</TabsTrigger>
+          <TabsTrigger value="reports">Assignment Reports</TabsTrigger>
         </TabsList>
 
         <TabsContent value="home">
@@ -154,6 +202,21 @@ export default function InternshipDashboard() {
                   onAssign={assignTeacher}
                 />
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="reports">
+          <Card className="shadow-lg">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Student Assignment Reports</CardTitle>
+              <Button onClick={downloadReports} variant="outline" size="sm">
+                <Download className="mr-2 h-4 w-4" />
+                Download CSV
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <StudentReports reports={reports} />
             </CardContent>
           </Card>
         </TabsContent>
