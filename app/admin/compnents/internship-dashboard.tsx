@@ -94,7 +94,7 @@ export default function InternshipDashboard() {
         </div>
       </header>
 
-      {/* <Tabs defaultValue="home">
+      <Tabs defaultValue="home">
         <TabsList className="flex justify-center space-x-4">
           <TabsTrigger value="home">Home</TabsTrigger>
           <TabsTrigger value="performance">Student Performance</TabsTrigger>
@@ -157,7 +157,7 @@ export default function InternshipDashboard() {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs> */}
+      </Tabs>
     </div>
   )
 }

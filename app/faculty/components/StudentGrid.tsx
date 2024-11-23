@@ -6,10 +6,10 @@ import StudentCard from "./StudentCard"
 const students = [
   {
     id: "1",
-    name: "John Doe",
+    name: "Pratham Mahajan",
     course: "Computer Science",
-    year: 3,
-    enrollmentNumber: "CS2021001",
+    year: 4,
+    enrollmentNumber: "21100BTCSE09926",
   },
   // Add more students...
 ]

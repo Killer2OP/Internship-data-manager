@@ -50,12 +50,12 @@ export default function Header() {
                     Dashboard
                   </Button>
                 </li>
-                <li>
+                {/* <li>
                   <Button variant="ghost" className="text-gray-800 hover:text-primary hover:bg-gray-300">
                     <Calendar className="mr-2 h-4 w-4" />
                     Schedule
                   </Button>
-                </li>
+                </li> */}
                 <li>
                   <Button 
                     variant="ghost" 
@@ -69,7 +69,7 @@ export default function Header() {
                 <li>
                   <Button variant="ghost" className="text-gray-800 hover:text-primary hover:bg-gray-300">
                     <Microscope className="mr-2 h-4 w-4" />
-                    FNR
+                    Submit FNR
                   </Button>
                 </li>
                 <li>

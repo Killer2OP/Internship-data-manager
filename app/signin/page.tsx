@@ -102,9 +102,9 @@ export default function SignIn() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center">
+        {/* <CardFooter className="flex justify-center">
           <Button variant="outline">Forgot Password</Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   )

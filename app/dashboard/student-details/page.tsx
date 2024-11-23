@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -12,6 +15,44 @@ import {
 import Header from "../components/Header"
 
 export default function StudentDetailsForm() {
+  const [students, setStudents] = useState([]);
+
+  const fetchStudents = async () => {
+    const response = await fetch("http://localhost:5000/api/students");
+    const data = await response.json();
+    setStudents(data);
+  };
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log("Submitting data:", data);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/students", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      fetchStudents();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
@@ -19,7 +60,7 @@ export default function StudentDetailsForm() {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">Student Details Form</h1>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="username" className="text-black">Username</Label>
@@ -123,6 +164,14 @@ export default function StudentDetailsForm() {
                 <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">Submit</Button>
               </div>
             </form>
+            {/* <h2 className="text-xl font-bold mt-8">Submitted Students</h2>
+            <ul>
+              {students.map((student) => (
+                <li key={student.id} className="border-b py-2">
+                  {student.name} - {student.email} - {student.mobile}
+                </li>
+              ))}
+            </ul> */}
           </div>
         </div>
       </div>

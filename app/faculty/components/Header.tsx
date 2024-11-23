@@ -36,7 +36,7 @@ export default function Header() {
             <ul className="flex flex-wrap justify-center md:justify-start space-x-2 md:space-x-4">
               {[
                 { icon: Home, label: "Dashboard", path: "/" },
-                { icon: Calendar, label: "Schedule", path: "/schedule" },
+                // { icon: Calendar, label: "Schedule", path: "/schedule" },
                 { icon: FileText, label: "Assignments", path: "/assignments" },
                 { icon: Microscope, label: "FNR", path: "/fnr" },
                 { icon: CheckCircle, label: "Verify", path: "https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/company-llp-name-search.html", external: true },

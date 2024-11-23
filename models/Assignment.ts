@@ -1,11 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-// Clear any existing model
-if (mongoose.models.Assignment) {
-  delete mongoose.models.Assignment;
-}
-
-const AssignmentSchema = new mongoose.Schema({
+const AssignmentSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -13,6 +8,10 @@ const AssignmentSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+  },
+  isSubmitted: {
+    type: Boolean,
+    default: false,
   },
   dueDate: {
     type: Date,
@@ -22,9 +21,9 @@ const AssignmentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   }
-}, {
-  collection: 'assignments_v2', // Use a completely new collection
-  strict: true
 });
 
-export default mongoose.model('Assignment', AssignmentSchema); 
+// Check if the model exists before creating a new one
+const Assignment = mongoose.models.Assignment || mongoose.model('Assignment', AssignmentSchema);
+
+export default Assignment;

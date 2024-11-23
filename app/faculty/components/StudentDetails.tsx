@@ -8,9 +8,15 @@ import { Student } from "@/lib/types/faculty"
 
 interface StudentDetailsProps {
   student: Student
+  onClose: () => void
 }
 
-export default function StudentDetails({ student }: StudentDetailsProps) {
+export default function StudentDetails({ student, onClose }: StudentDetailsProps) {
+  const handleApproval = () => {
+    console.log(`Approved student: ${student.name}`)
+    onClose()
+  }
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -26,6 +32,14 @@ export default function StudentDetails({ student }: StudentDetailsProps) {
             <Input id={key} value={value} className="col-span-3" readOnly />
           </div>
         ))}
+      </div>
+      <div className="flex justify-end">
+        <button onClick={handleApproval} className="btn btn-primary">
+          Approve
+        </button>
+        <button onClick={onClose} className="btn btn-secondary ml-2">
+          Close
+        </button>
       </div>
     </DialogContent>
   )
