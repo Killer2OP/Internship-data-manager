@@ -7,11 +7,29 @@ import { Dialog, DialogPortal } from '@radix-ui/react-dialog'; // Import DialogP
 
 interface StudentCardProps {
   student: {
-    id: string;
+    id: number;
     name: string;
     course: string;
     year: number;
     enrollmentNumber: string;
+    username: string;
+    startDate: Date;
+    mobile: string;
+    email: string;
+    companyName: string;
+    companyAddress: string;
+    mentorName: string;
+    mentorContact: string;
+    mentorEmail: string;
+    registrationNumber: string;
+    cinNumber: string;
+    city: string;
+    stipend: number;
+    internshipMode: string;
+    universityMentor: string;
+    placementCompany: string;
+    photograph: string;
+    resume: string;
   };
 }
 
@@ -20,7 +38,7 @@ export default function StudentCard({ student }: StudentCardProps) {
   const [selectedStudent, setSelectedStudent] = useState<StudentCardProps["student"] | null>(null);
 
   const handleCardClick = () => {
-    setSelectedStudent(student); // Set the selected student
+    setSelectedStudent(student); // Ensure this student object has all fields
     setIsDialogOpen(true); // Open the dialog
   };
 

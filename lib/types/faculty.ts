@@ -1,9 +1,27 @@
 export interface Student {
-    id: string
+    id: number
     name: string
     course: string
     year: number
     enrollmentNumber: string
+    username: string
+    startDate: Date
+    mobile: string
+    email: string
+    companyName: string
+    companyAddress: string
+    mentorName: string
+    mentorContact: string
+    mentorEmail: string
+    registrationNumber: string
+    cinNumber: string
+    city: string
+    stipend: number
+    internshipMode: string
+    universityMentor: string
+    placementCompany: string
+    photograph: string
+    resume: string
   }
   
   export interface Assignment {

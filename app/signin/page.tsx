@@ -30,10 +30,14 @@ export default function SignIn() {
       admin: {
         email: 'admin@example.com',
         password: 'admin123'
+      },
+      industryMentor: {
+        email: 'mentor@example.com',
+        password: 'mentor123'
       }
     }
 
-    // Check if credentials match faculty, student, or admin
+    // Check if credentials match faculty, student, admin, or industry mentor
     if (email === credentials.faculty.email && password === credentials.faculty.password) {
       console.log('Faculty sign in successful')
       router.push('/faculty')
@@ -43,6 +47,9 @@ export default function SignIn() {
     } else if (email === credentials.admin.email && password === credentials.admin.password) {
       console.log('Admin sign in successful')
       router.push('/admin')
+    } else if (email === credentials.industryMentor.email && password === credentials.industryMentor.password) {
+      console.log('Industry Mentor sign in successful')
+      router.push('/industry-mentor')
     } else {
       console.log('Invalid credentials')
       setError('Invalid email or password. Please try again.')

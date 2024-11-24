@@ -24,14 +24,19 @@ export default function StudentDetails({ student, onClose }: StudentDetailsProps
         <DialogDescription>Student Details</DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4">
-        {Object.entries(student).map(([key, value]) => (
-          <div key={key} className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor={key} className="text-right">
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </Label>
-            <Input id={key} value={value} className="col-span-3" readOnly />
-          </div>
-        ))}
+        {Object.entries(student).map(([key, value]) => {
+          if (key === 'startDate') {
+            value = new Date(value).toLocaleDateString();
+          }
+          return (
+            <div key={key} className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor={key} className="text-right">
+                {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+              </Label>
+              <Input id={key} value={value} className="col-span-3" readOnly />
+            </div>
+          );
+        })}
       </div>
       <div className="flex justify-end">
         <button onClick={handleApproval} className="btn btn-primary">
