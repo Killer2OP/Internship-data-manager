@@ -1,9 +1,10 @@
 'use client'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner"; // Ensure you have this installed
 
 interface FNRDialogProps {
   open: boolean;
@@ -13,6 +14,7 @@ interface FNRDialogProps {
 export function FNRDialog({ open, setOpen }: FNRDialogProps) {
   const [file, setFile] = useState<File | null>(null);
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false); // State for loading
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -21,38 +23,40 @@ export function FNRDialog({ open, setOpen }: FNRDialogProps) {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (file) {
+    e.preventDefault();
+    if (file) {
+      setLoading(true); // Set loading state to true
       const formData = new FormData();
       formData.append('file', file);
       formData.append('description', description);
 
       try {
-          const response = await fetch('/api/fnr', {
-              method: 'POST',
-              body: formData,
-          });
+        const response = await fetch('/api/fnr', {
+          method: 'POST',
+          body: formData,
+        });
 
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-          const data = await response.json();
-          console.log('Success:', data);
-          setFile(null);
-          setDescription('');
-          setOpen(false);
-      } catch (error: unknown) { // Specify the type of error
-          if (error instanceof Error) {
-              console.error('Error:', error.message); // Now you can safely access error.message
-          } else {
-              console.error('Unexpected error:', error); // Handle unexpected error types
-          }
+        const data = await response.json();
+        console.log('Success:', data);
+        toast.success('FNR submitted successfully'); // Notify user of success
+        setFile(null);
+        setDescription('');
+        setOpen(false); // Close the dialog
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Failed to submit FNR';
+        toast.error(errorMessage); // Notify user of error
+      } finally {
+        setLoading(false); // Reset loading state
       }
-  } else {
+    } else {
       console.error("No file selected");
-  }
-};
+      toast.error("Please select a file to upload."); // Notify user to select a file
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -80,7 +84,9 @@ export function FNRDialog({ open, setOpen }: FNRDialogProps) {
               required
             />
           </div>
-          <Button type="submit">Submit FNR</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit FNR'}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>
