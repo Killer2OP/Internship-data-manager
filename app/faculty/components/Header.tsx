@@ -41,8 +41,6 @@ export default function Header() {
               {[
                 { icon: Home, label: "Dashboard", path: "/" },
                 // { icon: Calendar, label: "Schedule", path: "/schedule" },
-                { icon: FileText, label: "Assignments", path: "/assignments" },
-                { icon: Microscope, label: "FNR Submissions", path: "/fnr-submissions" },
                 { icon: FileText, label: "Assignments", onClick: handleAssignmentsNavigation },
                 { icon: Microscope, label: "FNR", path: "/fnr" },
                 { icon: CheckCircle, label: "Verify", path: "https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/company-llp-name-search.html", external: true },
