@@ -24,6 +24,10 @@ export default function Header() {
     router.push(path)
   }
 
+  const handleAssignmentsNavigation = () => {
+    router.push("/assignments")
+  }
+
   return (
     <header className="bg-gray-200 text-gray-800 p-4 shadow-md">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -39,13 +43,15 @@ export default function Header() {
                 // { icon: Calendar, label: "Schedule", path: "/schedule" },
                 { icon: FileText, label: "Assignments", path: "/assignments" },
                 { icon: Microscope, label: "FNR Submissions", path: "/fnr-submissions" },
+                { icon: FileText, label: "Assignments", onClick: handleAssignmentsNavigation },
+                { icon: Microscope, label: "FNR", path: "/fnr" },
                 { icon: CheckCircle, label: "Verify", path: "https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/company-llp-name-search.html", external: true },
-              ].map(({ icon: Icon, label, path, external }) => (
+              ].map(({ icon: Icon, label, path, external, onClick }) => (
                 <li key={path}>
                   <Button
                     variant="ghost"
                     className="text-gray-800 hover:text-primary hover:bg-gray-300"
-                    onClick={() => external ? window.open(path, '_blank') : handleNavigation(path)}
+                    onClick={() => external ? window.open(path, '_blank') : onClick ? onClick() : handleNavigation(path)}
                   >
                     <Icon className="mr-2 h-4 w-4" />
                     {label}

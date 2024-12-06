@@ -71,7 +71,7 @@ export function SubmitAssignmentForm({ assignment, onSubmit }: SubmitAssignmentF
         />
       </div>
       <div>
-        <Label htmlFor="file">Attachment (optional)</Label>
+        <Label htmlFor="file">Attachment (required)</Label>
         <Input
           id="file"
           type="file"
